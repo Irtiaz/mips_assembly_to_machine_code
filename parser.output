@@ -1,0 +1,1021 @@
+Grammar
+
+    0 $accept: start $end
+
+    1 start: program
+
+    2 program: program unit
+    3        | unit
+
+    4 unit: instruction
+    5     | LABEL COLON instruction
+
+    6 instruction: rtype_instruction
+    7            | itype_instruction
+    8            | stype_instruction
+    9            | jtype_instruction
+   10            | push_instruction
+   11            | pop_instruction
+
+   12 $@1: ε
+
+   13 rtype_instruction: ADD $@1 rtype_params
+
+   14 $@2: ε
+
+   15 rtype_instruction: SUB $@2 rtype_params
+
+   16 $@3: ε
+
+   17 rtype_instruction: AND $@3 rtype_params
+
+   18 $@4: ε
+
+   19 rtype_instruction: OR $@4 rtype_params
+
+   20 $@5: ε
+
+   21 rtype_instruction: NOR $@5 rtype_params
+
+   22 rtype_params: REGISTER COMMA REGISTER COMMA REGISTER
+
+   23 $@6: ε
+
+   24 itype_instruction: ADDI $@6 itype_params
+
+   25 $@7: ε
+
+   26 itype_instruction: SUBI $@7 itype_params
+
+   27 $@8: ε
+
+   28 itype_instruction: ANDI $@8 itype_params
+
+   29 $@9: ε
+
+   30 itype_instruction: ORI $@9 itype_params
+
+   31 $@10: ε
+
+   32 itype_instruction: BEQ $@10 branch_params
+
+   33 $@11: ε
+
+   34 itype_instruction: BNEQ $@11 branch_params
+
+   35 $@12: ε
+
+   36 itype_instruction: LW $@12 memory_params
+
+   37 $@13: ε
+
+   38 itype_instruction: SW $@13 memory_params
+
+   39 itype_params: REGISTER COMMA REGISTER COMMA INT
+
+   40 branch_params: REGISTER COMMA REGISTER COMMA LABEL
+
+   41 memory_params: REGISTER COMMA INT LPAREN REGISTER RPAREN
+
+   42 $@14: ε
+
+   43 stype_instruction: SLL $@14 itype_params
+
+   44 $@15: ε
+
+   45 stype_instruction: SRL $@15 itype_params
+
+   46 $@16: ε
+
+   47 jtype_instruction: J $@16 LABEL
+
+   48 push_instruction: PUSH REGISTER
+   49                 | PUSH INT LPAREN REGISTER RPAREN
+
+   50 pop_instruction: POP REGISTER
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    ADD (258) 13
+    ADDI (259) 24
+    SUB (260) 15
+    SUBI (261) 26
+    AND (262) 17
+    ANDI (263) 28
+    OR (264) 19
+    ORI (265) 30
+    SLL (266) 43
+    SRL (267) 45
+    NOR (268) 21
+    SW (269) 38
+    LW (270) 36
+    BEQ (271) 32
+    BNEQ (272) 34
+    J (273) 47
+    REGISTER (274) 22 39 40 41 48 49 50
+    COMMA (275) 22 39 40 41
+    COLON (276) 5
+    LPAREN (277) 41 49
+    RPAREN (278) 41 49
+    LABEL (279) 5 40 47
+    INT (280) 39 41 49
+    PUSH (281) 48 49
+    POP (282) 50
+
+
+Nonterminals, with rules where they appear
+
+    $accept (28)
+        on left: 0
+    start (29)
+        on left: 1
+        on right: 0
+    program (30)
+        on left: 2 3
+        on right: 1 2
+    unit (31)
+        on left: 4 5
+        on right: 2 3
+    instruction (32)
+        on left: 6 7 8 9 10 11
+        on right: 4 5
+    rtype_instruction (33)
+        on left: 13 15 17 19 21
+        on right: 6
+    $@1 (34)
+        on left: 12
+        on right: 13
+    $@2 (35)
+        on left: 14
+        on right: 15
+    $@3 (36)
+        on left: 16
+        on right: 17
+    $@4 (37)
+        on left: 18
+        on right: 19
+    $@5 (38)
+        on left: 20
+        on right: 21
+    rtype_params (39)
+        on left: 22
+        on right: 13 15 17 19 21
+    itype_instruction (40)
+        on left: 24 26 28 30 32 34 36 38
+        on right: 7
+    $@6 (41)
+        on left: 23
+        on right: 24
+    $@7 (42)
+        on left: 25
+        on right: 26
+    $@8 (43)
+        on left: 27
+        on right: 28
+    $@9 (44)
+        on left: 29
+        on right: 30
+    $@10 (45)
+        on left: 31
+        on right: 32
+    $@11 (46)
+        on left: 33
+        on right: 34
+    $@12 (47)
+        on left: 35
+        on right: 36
+    $@13 (48)
+        on left: 37
+        on right: 38
+    itype_params (49)
+        on left: 39
+        on right: 24 26 28 30 43 45
+    branch_params (50)
+        on left: 40
+        on right: 32 34
+    memory_params (51)
+        on left: 41
+        on right: 36 38
+    stype_instruction (52)
+        on left: 43 45
+        on right: 8
+    $@14 (53)
+        on left: 42
+        on right: 43
+    $@15 (54)
+        on left: 44
+        on right: 45
+    jtype_instruction (55)
+        on left: 47
+        on right: 9
+    $@16 (56)
+        on left: 46
+        on right: 47
+    push_instruction (57)
+        on left: 48 49
+        on right: 10
+    pop_instruction (58)
+        on left: 50
+        on right: 11
+
+
+State 0
+
+    0 $accept: • start $end
+
+    ADD    shift, and go to state 1
+    ADDI   shift, and go to state 2
+    SUB    shift, and go to state 3
+    SUBI   shift, and go to state 4
+    AND    shift, and go to state 5
+    ANDI   shift, and go to state 6
+    OR     shift, and go to state 7
+    ORI    shift, and go to state 8
+    SLL    shift, and go to state 9
+    SRL    shift, and go to state 10
+    NOR    shift, and go to state 11
+    SW     shift, and go to state 12
+    LW     shift, and go to state 13
+    BEQ    shift, and go to state 14
+    BNEQ   shift, and go to state 15
+    J      shift, and go to state 16
+    LABEL  shift, and go to state 17
+    PUSH   shift, and go to state 18
+    POP    shift, and go to state 19
+
+    start              go to state 20
+    program            go to state 21
+    unit               go to state 22
+    instruction        go to state 23
+    rtype_instruction  go to state 24
+    itype_instruction  go to state 25
+    stype_instruction  go to state 26
+    jtype_instruction  go to state 27
+    push_instruction   go to state 28
+    pop_instruction    go to state 29
+
+
+State 1
+
+   13 rtype_instruction: ADD • $@1 rtype_params
+
+    $default  reduce using rule 12 ($@1)
+
+    $@1  go to state 30
+
+
+State 2
+
+   24 itype_instruction: ADDI • $@6 itype_params
+
+    $default  reduce using rule 23 ($@6)
+
+    $@6  go to state 31
+
+
+State 3
+
+   15 rtype_instruction: SUB • $@2 rtype_params
+
+    $default  reduce using rule 14 ($@2)
+
+    $@2  go to state 32
+
+
+State 4
+
+   26 itype_instruction: SUBI • $@7 itype_params
+
+    $default  reduce using rule 25 ($@7)
+
+    $@7  go to state 33
+
+
+State 5
+
+   17 rtype_instruction: AND • $@3 rtype_params
+
+    $default  reduce using rule 16 ($@3)
+
+    $@3  go to state 34
+
+
+State 6
+
+   28 itype_instruction: ANDI • $@8 itype_params
+
+    $default  reduce using rule 27 ($@8)
+
+    $@8  go to state 35
+
+
+State 7
+
+   19 rtype_instruction: OR • $@4 rtype_params
+
+    $default  reduce using rule 18 ($@4)
+
+    $@4  go to state 36
+
+
+State 8
+
+   30 itype_instruction: ORI • $@9 itype_params
+
+    $default  reduce using rule 29 ($@9)
+
+    $@9  go to state 37
+
+
+State 9
+
+   43 stype_instruction: SLL • $@14 itype_params
+
+    $default  reduce using rule 42 ($@14)
+
+    $@14  go to state 38
+
+
+State 10
+
+   45 stype_instruction: SRL • $@15 itype_params
+
+    $default  reduce using rule 44 ($@15)
+
+    $@15  go to state 39
+
+
+State 11
+
+   21 rtype_instruction: NOR • $@5 rtype_params
+
+    $default  reduce using rule 20 ($@5)
+
+    $@5  go to state 40
+
+
+State 12
+
+   38 itype_instruction: SW • $@13 memory_params
+
+    $default  reduce using rule 37 ($@13)
+
+    $@13  go to state 41
+
+
+State 13
+
+   36 itype_instruction: LW • $@12 memory_params
+
+    $default  reduce using rule 35 ($@12)
+
+    $@12  go to state 42
+
+
+State 14
+
+   32 itype_instruction: BEQ • $@10 branch_params
+
+    $default  reduce using rule 31 ($@10)
+
+    $@10  go to state 43
+
+
+State 15
+
+   34 itype_instruction: BNEQ • $@11 branch_params
+
+    $default  reduce using rule 33 ($@11)
+
+    $@11  go to state 44
+
+
+State 16
+
+   47 jtype_instruction: J • $@16 LABEL
+
+    $default  reduce using rule 46 ($@16)
+
+    $@16  go to state 45
+
+
+State 17
+
+    5 unit: LABEL • COLON instruction
+
+    COLON  shift, and go to state 46
+
+
+State 18
+
+   48 push_instruction: PUSH • REGISTER
+   49                 | PUSH • INT LPAREN REGISTER RPAREN
+
+    REGISTER  shift, and go to state 47
+    INT       shift, and go to state 48
+
+
+State 19
+
+   50 pop_instruction: POP • REGISTER
+
+    REGISTER  shift, and go to state 49
+
+
+State 20
+
+    0 $accept: start • $end
+
+    $end  shift, and go to state 50
+
+
+State 21
+
+    1 start: program •
+    2 program: program • unit
+
+    ADD    shift, and go to state 1
+    ADDI   shift, and go to state 2
+    SUB    shift, and go to state 3
+    SUBI   shift, and go to state 4
+    AND    shift, and go to state 5
+    ANDI   shift, and go to state 6
+    OR     shift, and go to state 7
+    ORI    shift, and go to state 8
+    SLL    shift, and go to state 9
+    SRL    shift, and go to state 10
+    NOR    shift, and go to state 11
+    SW     shift, and go to state 12
+    LW     shift, and go to state 13
+    BEQ    shift, and go to state 14
+    BNEQ   shift, and go to state 15
+    J      shift, and go to state 16
+    LABEL  shift, and go to state 17
+    PUSH   shift, and go to state 18
+    POP    shift, and go to state 19
+
+    $default  reduce using rule 1 (start)
+
+    unit               go to state 51
+    instruction        go to state 23
+    rtype_instruction  go to state 24
+    itype_instruction  go to state 25
+    stype_instruction  go to state 26
+    jtype_instruction  go to state 27
+    push_instruction   go to state 28
+    pop_instruction    go to state 29
+
+
+State 22
+
+    3 program: unit •
+
+    $default  reduce using rule 3 (program)
+
+
+State 23
+
+    4 unit: instruction •
+
+    $default  reduce using rule 4 (unit)
+
+
+State 24
+
+    6 instruction: rtype_instruction •
+
+    $default  reduce using rule 6 (instruction)
+
+
+State 25
+
+    7 instruction: itype_instruction •
+
+    $default  reduce using rule 7 (instruction)
+
+
+State 26
+
+    8 instruction: stype_instruction •
+
+    $default  reduce using rule 8 (instruction)
+
+
+State 27
+
+    9 instruction: jtype_instruction •
+
+    $default  reduce using rule 9 (instruction)
+
+
+State 28
+
+   10 instruction: push_instruction •
+
+    $default  reduce using rule 10 (instruction)
+
+
+State 29
+
+   11 instruction: pop_instruction •
+
+    $default  reduce using rule 11 (instruction)
+
+
+State 30
+
+   13 rtype_instruction: ADD $@1 • rtype_params
+
+    REGISTER  shift, and go to state 52
+
+    rtype_params  go to state 53
+
+
+State 31
+
+   24 itype_instruction: ADDI $@6 • itype_params
+
+    REGISTER  shift, and go to state 54
+
+    itype_params  go to state 55
+
+
+State 32
+
+   15 rtype_instruction: SUB $@2 • rtype_params
+
+    REGISTER  shift, and go to state 52
+
+    rtype_params  go to state 56
+
+
+State 33
+
+   26 itype_instruction: SUBI $@7 • itype_params
+
+    REGISTER  shift, and go to state 54
+
+    itype_params  go to state 57
+
+
+State 34
+
+   17 rtype_instruction: AND $@3 • rtype_params
+
+    REGISTER  shift, and go to state 52
+
+    rtype_params  go to state 58
+
+
+State 35
+
+   28 itype_instruction: ANDI $@8 • itype_params
+
+    REGISTER  shift, and go to state 54
+
+    itype_params  go to state 59
+
+
+State 36
+
+   19 rtype_instruction: OR $@4 • rtype_params
+
+    REGISTER  shift, and go to state 52
+
+    rtype_params  go to state 60
+
+
+State 37
+
+   30 itype_instruction: ORI $@9 • itype_params
+
+    REGISTER  shift, and go to state 54
+
+    itype_params  go to state 61
+
+
+State 38
+
+   43 stype_instruction: SLL $@14 • itype_params
+
+    REGISTER  shift, and go to state 54
+
+    itype_params  go to state 62
+
+
+State 39
+
+   45 stype_instruction: SRL $@15 • itype_params
+
+    REGISTER  shift, and go to state 54
+
+    itype_params  go to state 63
+
+
+State 40
+
+   21 rtype_instruction: NOR $@5 • rtype_params
+
+    REGISTER  shift, and go to state 52
+
+    rtype_params  go to state 64
+
+
+State 41
+
+   38 itype_instruction: SW $@13 • memory_params
+
+    REGISTER  shift, and go to state 65
+
+    memory_params  go to state 66
+
+
+State 42
+
+   36 itype_instruction: LW $@12 • memory_params
+
+    REGISTER  shift, and go to state 65
+
+    memory_params  go to state 67
+
+
+State 43
+
+   32 itype_instruction: BEQ $@10 • branch_params
+
+    REGISTER  shift, and go to state 68
+
+    branch_params  go to state 69
+
+
+State 44
+
+   34 itype_instruction: BNEQ $@11 • branch_params
+
+    REGISTER  shift, and go to state 68
+
+    branch_params  go to state 70
+
+
+State 45
+
+   47 jtype_instruction: J $@16 • LABEL
+
+    LABEL  shift, and go to state 71
+
+
+State 46
+
+    5 unit: LABEL COLON • instruction
+
+    ADD   shift, and go to state 1
+    ADDI  shift, and go to state 2
+    SUB   shift, and go to state 3
+    SUBI  shift, and go to state 4
+    AND   shift, and go to state 5
+    ANDI  shift, and go to state 6
+    OR    shift, and go to state 7
+    ORI   shift, and go to state 8
+    SLL   shift, and go to state 9
+    SRL   shift, and go to state 10
+    NOR   shift, and go to state 11
+    SW    shift, and go to state 12
+    LW    shift, and go to state 13
+    BEQ   shift, and go to state 14
+    BNEQ  shift, and go to state 15
+    J     shift, and go to state 16
+    PUSH  shift, and go to state 18
+    POP   shift, and go to state 19
+
+    instruction        go to state 72
+    rtype_instruction  go to state 24
+    itype_instruction  go to state 25
+    stype_instruction  go to state 26
+    jtype_instruction  go to state 27
+    push_instruction   go to state 28
+    pop_instruction    go to state 29
+
+
+State 47
+
+   48 push_instruction: PUSH REGISTER •
+
+    $default  reduce using rule 48 (push_instruction)
+
+
+State 48
+
+   49 push_instruction: PUSH INT • LPAREN REGISTER RPAREN
+
+    LPAREN  shift, and go to state 73
+
+
+State 49
+
+   50 pop_instruction: POP REGISTER •
+
+    $default  reduce using rule 50 (pop_instruction)
+
+
+State 50
+
+    0 $accept: start $end •
+
+    $default  accept
+
+
+State 51
+
+    2 program: program unit •
+
+    $default  reduce using rule 2 (program)
+
+
+State 52
+
+   22 rtype_params: REGISTER • COMMA REGISTER COMMA REGISTER
+
+    COMMA  shift, and go to state 74
+
+
+State 53
+
+   13 rtype_instruction: ADD $@1 rtype_params •
+
+    $default  reduce using rule 13 (rtype_instruction)
+
+
+State 54
+
+   39 itype_params: REGISTER • COMMA REGISTER COMMA INT
+
+    COMMA  shift, and go to state 75
+
+
+State 55
+
+   24 itype_instruction: ADDI $@6 itype_params •
+
+    $default  reduce using rule 24 (itype_instruction)
+
+
+State 56
+
+   15 rtype_instruction: SUB $@2 rtype_params •
+
+    $default  reduce using rule 15 (rtype_instruction)
+
+
+State 57
+
+   26 itype_instruction: SUBI $@7 itype_params •
+
+    $default  reduce using rule 26 (itype_instruction)
+
+
+State 58
+
+   17 rtype_instruction: AND $@3 rtype_params •
+
+    $default  reduce using rule 17 (rtype_instruction)
+
+
+State 59
+
+   28 itype_instruction: ANDI $@8 itype_params •
+
+    $default  reduce using rule 28 (itype_instruction)
+
+
+State 60
+
+   19 rtype_instruction: OR $@4 rtype_params •
+
+    $default  reduce using rule 19 (rtype_instruction)
+
+
+State 61
+
+   30 itype_instruction: ORI $@9 itype_params •
+
+    $default  reduce using rule 30 (itype_instruction)
+
+
+State 62
+
+   43 stype_instruction: SLL $@14 itype_params •
+
+    $default  reduce using rule 43 (stype_instruction)
+
+
+State 63
+
+   45 stype_instruction: SRL $@15 itype_params •
+
+    $default  reduce using rule 45 (stype_instruction)
+
+
+State 64
+
+   21 rtype_instruction: NOR $@5 rtype_params •
+
+    $default  reduce using rule 21 (rtype_instruction)
+
+
+State 65
+
+   41 memory_params: REGISTER • COMMA INT LPAREN REGISTER RPAREN
+
+    COMMA  shift, and go to state 76
+
+
+State 66
+
+   38 itype_instruction: SW $@13 memory_params •
+
+    $default  reduce using rule 38 (itype_instruction)
+
+
+State 67
+
+   36 itype_instruction: LW $@12 memory_params •
+
+    $default  reduce using rule 36 (itype_instruction)
+
+
+State 68
+
+   40 branch_params: REGISTER • COMMA REGISTER COMMA LABEL
+
+    COMMA  shift, and go to state 77
+
+
+State 69
+
+   32 itype_instruction: BEQ $@10 branch_params •
+
+    $default  reduce using rule 32 (itype_instruction)
+
+
+State 70
+
+   34 itype_instruction: BNEQ $@11 branch_params •
+
+    $default  reduce using rule 34 (itype_instruction)
+
+
+State 71
+
+   47 jtype_instruction: J $@16 LABEL •
+
+    $default  reduce using rule 47 (jtype_instruction)
+
+
+State 72
+
+    5 unit: LABEL COLON instruction •
+
+    $default  reduce using rule 5 (unit)
+
+
+State 73
+
+   49 push_instruction: PUSH INT LPAREN • REGISTER RPAREN
+
+    REGISTER  shift, and go to state 78
+
+
+State 74
+
+   22 rtype_params: REGISTER COMMA • REGISTER COMMA REGISTER
+
+    REGISTER  shift, and go to state 79
+
+
+State 75
+
+   39 itype_params: REGISTER COMMA • REGISTER COMMA INT
+
+    REGISTER  shift, and go to state 80
+
+
+State 76
+
+   41 memory_params: REGISTER COMMA • INT LPAREN REGISTER RPAREN
+
+    INT  shift, and go to state 81
+
+
+State 77
+
+   40 branch_params: REGISTER COMMA • REGISTER COMMA LABEL
+
+    REGISTER  shift, and go to state 82
+
+
+State 78
+
+   49 push_instruction: PUSH INT LPAREN REGISTER • RPAREN
+
+    RPAREN  shift, and go to state 83
+
+
+State 79
+
+   22 rtype_params: REGISTER COMMA REGISTER • COMMA REGISTER
+
+    COMMA  shift, and go to state 84
+
+
+State 80
+
+   39 itype_params: REGISTER COMMA REGISTER • COMMA INT
+
+    COMMA  shift, and go to state 85
+
+
+State 81
+
+   41 memory_params: REGISTER COMMA INT • LPAREN REGISTER RPAREN
+
+    LPAREN  shift, and go to state 86
+
+
+State 82
+
+   40 branch_params: REGISTER COMMA REGISTER • COMMA LABEL
+
+    COMMA  shift, and go to state 87
+
+
+State 83
+
+   49 push_instruction: PUSH INT LPAREN REGISTER RPAREN •
+
+    $default  reduce using rule 49 (push_instruction)
+
+
+State 84
+
+   22 rtype_params: REGISTER COMMA REGISTER COMMA • REGISTER
+
+    REGISTER  shift, and go to state 88
+
+
+State 85
+
+   39 itype_params: REGISTER COMMA REGISTER COMMA • INT
+
+    INT  shift, and go to state 89
+
+
+State 86
+
+   41 memory_params: REGISTER COMMA INT LPAREN • REGISTER RPAREN
+
+    REGISTER  shift, and go to state 90
+
+
+State 87
+
+   40 branch_params: REGISTER COMMA REGISTER COMMA • LABEL
+
+    LABEL  shift, and go to state 91
+
+
+State 88
+
+   22 rtype_params: REGISTER COMMA REGISTER COMMA REGISTER •
+
+    $default  reduce using rule 22 (rtype_params)
+
+
+State 89
+
+   39 itype_params: REGISTER COMMA REGISTER COMMA INT •
+
+    $default  reduce using rule 39 (itype_params)
+
+
+State 90
+
+   41 memory_params: REGISTER COMMA INT LPAREN REGISTER • RPAREN
+
+    RPAREN  shift, and go to state 92
+
+
+State 91
+
+   40 branch_params: REGISTER COMMA REGISTER COMMA LABEL •
+
+    $default  reduce using rule 40 (branch_params)
+
+
+State 92
+
+   41 memory_params: REGISTER COMMA INT LPAREN REGISTER RPAREN •
+
+    $default  reduce using rule 41 (memory_params)
