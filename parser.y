@@ -188,21 +188,42 @@ pop_instruction: POP REGISTER {
 %%
 
 int main(int argc, char **argv) {
-	if (argc != 3) {
+	if (argc != 3 && argc != 4) {
 		std::cout << "Wrong usage" << std::endl;
-		std::cout << "Sample usage: ./assembler.out <assembly_file_path> <isa_string>" << std::endl;
+		std::cout << "Sample usage: ./assembler.out [--safe-init] <assembly_file_path> <isa_string>" << std::endl;
 		return 1;
 	}
 
-	isa = argv[2];
+	isa = argv[argc == 3? 2 : 3];
 
-	yyin = fopen(argv[1], "r");
+	yyin = fopen(argv[argc == 3? 1 : 2], "r");
 	if (!yyin) {
 		std::cout << "File not found" << std::endl;
 		return 1;
 	}
 
 	yyparse();
+
+	if (argc == 4) {
+		if (std::string(argv[1]) == "--safe-init") {
+			// clear $zero by performing $zero = $zero and ($zero nor $zero)
+			instructionBuffer << getHexChar(getOpcodeID("nor")) << getHexChar(getRegisterID("$zero")) << getHexChar(getRegisterID("$zero")) << getHexChar(getRegisterID("$x0"));
+			instructions.insert(instructions.begin(), instructionBuffer.str());
+			instructionBuffer.str(std::string());
+
+			instructionBuffer << getHexChar(getOpcodeID("and")) << getHexChar(getRegisterID("$zero")) << getHexChar(getRegisterID("$x0")) << getHexChar(getRegisterID("$zero"));
+			instructions.insert(instructions.begin() + 1, instructionBuffer.str());
+			instructionBuffer.str(std::string());
+
+			//set $sp to F by performing $sp = $sp | 0xF
+			instructionBuffer << getHexChar(getOpcodeID("ori")) << getHexChar(getRegisterID("$sp")) << getHexChar(getRegisterID("$sp")) << "F";
+			instructions.insert(instructions.begin(), instructionBuffer.str());
+			instructionBuffer.str(std::string());
+		} else {
+			std::cout << "Unknown flag " << argv[1] << std::endl;
+			exit(1);
+		}
+	}
 
 	std::ofstream hexFile("hex.txt");
 	std::ofstream binFile("out.bin");
