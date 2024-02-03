@@ -31,7 +31,7 @@ std::vector<std::string> instructions;
 %}
 
 %token ADD ADDI SUB SUBI AND ANDI OR ORI SLL SRL NOR SW LW BEQ BNEQ J REGISTER COMMA COLON LPAREN RPAREN LABEL INT PUSH POP
-%type start program unit instruction rtype_instruction rtype_params itype_instruction itype_params branch_params memory_params stype_instruction jtype_instruction
+%type start program unit instruction rtype_instruction rtype_params itype_instruction itype_params branch_params memory_params stype_instruction jtype_instruction labels
 
 %%
 start: program {
@@ -65,7 +65,12 @@ program: program unit
 ;
 unit: instruction { ++instructionCounter; }
 	|
-	LABEL COLON instruction { map[$1] = instructionCounter; ++instructionCounter; }
+	labels instruction { ++instructionCounter; }
+;
+
+labels: labels LABEL { map[$2] = instructionCounter; } COLON
+	|
+	LABEL { map[$1] = instructionCounter; } COLON
 ;
 
 instruction: rtype_instruction
