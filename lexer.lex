@@ -7,6 +7,7 @@
 %%
 
 \$("zero"|"t0"|"t1"|"t2"|"t3"|"t4") { yylval = std::string(yytext); return REGISTER; }
+\$[a-z]+[0-9]* { std::cout << "unrecognized register: " << yytext << std::endl; exit(1); }
 
 "add" { return ADD; }
 "addi" { return ADDI; }
