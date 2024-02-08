@@ -1663,13 +1663,9 @@ int main(int argc, char **argv) {
 
 	if (argc == 4) {
 		if (std::string(argv[1]) == "--safe-init") {
-			// clear $zero by performing $zero = $zero and ($zero nor $zero)
-			instructionBuffer << getHexChar(getOpcodeID("nor")) << getHexChar(getRegisterID("$zero")) << getHexChar(getRegisterID("$zero")) << getHexChar(getRegisterID("$x0"));
+			// clear $zero by performing $zero = $zero sub $zero
+			instructionBuffer << getHexChar(getOpcodeID("sub")) << getHexChar(getRegisterID("$zero")) << getHexChar(getRegisterID("$zero")) << getHexChar(getRegisterID("$zero"));
 			instructions.insert(instructions.begin(), instructionBuffer.str());
-			instructionBuffer.str(std::string());
-
-			instructionBuffer << getHexChar(getOpcodeID("and")) << getHexChar(getRegisterID("$zero")) << getHexChar(getRegisterID("$x0")) << getHexChar(getRegisterID("$zero"));
-			instructions.insert(instructions.begin() + 1, instructionBuffer.str());
 			instructionBuffer.str(std::string());
 
 			//set $sp to F by performing $sp = $sp | 0xF
