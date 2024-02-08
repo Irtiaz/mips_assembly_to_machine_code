@@ -2,6 +2,7 @@
 
 %{
 #include "parser.tab.h"
+#include <cstdlib>
 %}
 
 %%
@@ -35,7 +36,7 @@
 ")" { return RPAREN; }
 
 [a-zA-Z_][a-zA-Z0-9_]* { yylval = std::string(yytext); return LABEL;}
-[0-9]+ { yylval = std::string(yytext); return INT; }
+"-"?[0-9]+ { yylval = yytext[0] == '-'? std::to_string(16 + atoi(yytext)) : std::string(yytext); return INT; }
 
 ";".* {}
 
