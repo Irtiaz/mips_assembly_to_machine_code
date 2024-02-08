@@ -162,6 +162,8 @@ push_instruction: PUSH REGISTER {
 	instructionBuffer << getHexChar(getOpcodeID("subi")) << getHexChar(getRegisterID("$sp")) << getHexChar(getRegisterID("$sp")) << "1";
 	instructions.push_back(instructionBuffer.str());
 	instructionBuffer.str(std::string());
+
+	++instructionCounter;
 }
 	|
 	PUSH INT LPAREN REGISTER RPAREN {
@@ -176,6 +178,8 @@ push_instruction: PUSH REGISTER {
 		instructionBuffer << getHexChar(getOpcodeID("subi")) << getHexChar(getRegisterID("$sp")) << getHexChar(getRegisterID("$sp")) << "1";
 		instructions.push_back(instructionBuffer.str());
 		instructionBuffer.str(std::string());
+
+		instructionCounter += 2;
 	}
 ;
 
@@ -187,6 +191,8 @@ pop_instruction: POP REGISTER {
 	instructionBuffer << getHexChar(getOpcodeID("lw")) << getHexChar(getRegisterID("$sp")) << getHexChar(getRegisterID($2)) << "0";
 	instructions.push_back(instructionBuffer.str());
 	instructionBuffer.str(std::string());
+
+	++instructionCounter;
 }
 ;
 
@@ -207,8 +213,6 @@ int main(int argc, char **argv) {
 		return 1;
 	}
 
-	yyparse();
-
 	if (argc == 4) {
 		if (std::string(argv[1]) == "--safe-init") {
 			// clear $zero by performing $zero = $zero sub $zero
@@ -224,7 +228,13 @@ int main(int argc, char **argv) {
 			std::cout << "Unknown flag " << argv[1] << std::endl;
 			exit(1);
 		}
+
+		instructionCounter += 2;
+
 	}
+
+	yyparse();
+
 
 	std::ofstream hexFile("hex.txt");
 	std::ofstream binFile("out.bin");

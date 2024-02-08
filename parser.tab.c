@@ -576,7 +576,7 @@ static const yytype_uint8 yyrline[] =
       91,    93,    93,    95,    95,    97,    97,   100,   107,   107,
      109,   109,   111,   111,   113,   113,   115,   115,   117,   117,
      119,   119,   121,   121,   124,   131,   138,   145,   145,   147,
-     147,   150,   150,   157,   167,   182
+     147,   150,   150,   157,   169,   186
 };
 #endif
 
@@ -1411,12 +1411,14 @@ yyreduce:
 	instructionBuffer << getHexChar(getOpcodeID("subi")) << getHexChar(getRegisterID("$sp")) << getHexChar(getRegisterID("$sp")) << "1";
 	instructions.push_back(instructionBuffer.str());
 	instructionBuffer.str(std::string());
+
+	++instructionCounter;
 }
-#line 1416 "parser.tab.c"
+#line 1418 "parser.tab.c"
     break;
 
   case 54: /* push_instruction: PUSH INT LPAREN REGISTER RPAREN  */
-#line 167 "parser.y"
+#line 169 "parser.y"
                                         {
 		instructionBuffer << getHexChar(getOpcodeID("lw")) << getHexChar(getRegisterID(yyvsp[-1])) << getHexChar(getRegisterID("$x0")) << getHexChar(atoi(yyvsp[-3].c_str()));
 		instructions.push_back(instructionBuffer.str());
@@ -1429,12 +1431,14 @@ yyreduce:
 		instructionBuffer << getHexChar(getOpcodeID("subi")) << getHexChar(getRegisterID("$sp")) << getHexChar(getRegisterID("$sp")) << "1";
 		instructions.push_back(instructionBuffer.str());
 		instructionBuffer.str(std::string());
+
+		instructionCounter += 2;
 	}
-#line 1434 "parser.tab.c"
+#line 1438 "parser.tab.c"
     break;
 
   case 55: /* pop_instruction: POP REGISTER  */
-#line 182 "parser.y"
+#line 186 "parser.y"
                               {
 	instructionBuffer << getHexChar(getOpcodeID("addi")) << getHexChar(getRegisterID("$sp")) << getHexChar(getRegisterID("$sp")) << "1";
 	instructions.push_back(instructionBuffer.str());
@@ -1443,12 +1447,14 @@ yyreduce:
 	instructionBuffer << getHexChar(getOpcodeID("lw")) << getHexChar(getRegisterID("$sp")) << getHexChar(getRegisterID(yyvsp[0])) << "0";
 	instructions.push_back(instructionBuffer.str());
 	instructionBuffer.str(std::string());
+
+	++instructionCounter;
 }
-#line 1448 "parser.tab.c"
+#line 1454 "parser.tab.c"
     break;
 
 
-#line 1452 "parser.tab.c"
+#line 1458 "parser.tab.c"
 
       default: break;
     }
@@ -1641,7 +1647,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 193 "parser.y"
+#line 199 "parser.y"
 
 
 int main(int argc, char **argv) {
@@ -1659,8 +1665,6 @@ int main(int argc, char **argv) {
 		return 1;
 	}
 
-	yyparse();
-
 	if (argc == 4) {
 		if (std::string(argv[1]) == "--safe-init") {
 			// clear $zero by performing $zero = $zero sub $zero
@@ -1676,7 +1680,13 @@ int main(int argc, char **argv) {
 			std::cout << "Unknown flag " << argv[1] << std::endl;
 			exit(1);
 		}
+
+		instructionCounter += 2;
+
 	}
+
+	yyparse();
+
 
 	std::ofstream hexFile("hex.txt");
 	std::ofstream binFile("out.bin");
