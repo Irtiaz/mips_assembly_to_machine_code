@@ -39,7 +39,8 @@
 
 ";".* {}
 
-\n {}
-. { if (yytext[0] != ' ') std::cout << "Unrecognized pattern: " << yytext << std::endl; }
+(\r)?\n {}
+
+. { if (yytext[0] != ' ' && yytext[0] != '\t') std::cout << "WARNING: Unrecognized character: " << yytext << " ascii value " << int(yytext[0]) << std::endl; }
 
 %%
